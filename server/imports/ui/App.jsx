@@ -259,6 +259,8 @@ class App extends Component {
 						<li key={person.sessionId}>
 							UserSessionId: {person.sessionId}
 							<br />
+							Name: {person.name}
+							<br />
 							Current Note: {person.note}
 							Current Degree: {person.angle}
 							<br />
