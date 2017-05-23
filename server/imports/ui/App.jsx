@@ -67,16 +67,13 @@ class App extends Component {
 		this.updateMockedPhone4();
 
 		console.log('clicked');
-		AppInfo.update(
-			{ _id: 'QaGoK9QTAL82x2weC' },
-			{
-				$set: {
-					name: 'appInfo',
-					turn: 0,
-					playingArray: this.constructPlayingArray()
-				}
+		AppInfo.update(AppInfo.findOne()._id, {
+			$set: {
+				name: 'appInfo',
+				turn: 0,
+				playingArray: this.constructPlayingArray()
 			}
-		);
+		});
 		// create a synth and connect it to the master output (your speakers)
 		var synth = new Tone.Synth().toMaster();
 
@@ -122,7 +119,6 @@ class App extends Component {
 	getNthUser(n) {
 		const turn = this.state.turn + n;
 		const people = this.whoIsOnline();
-		console.log(people);
 		const count = this.userCount();
 		const personTurn = turn % count;
 		return people[personTurn];
