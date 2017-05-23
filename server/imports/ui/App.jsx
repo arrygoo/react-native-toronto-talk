@@ -65,8 +65,8 @@ class App extends Component {
 	startPlaying() {
 		this.updateMockedPhone1();
 		this.updateMockedPhone2();
-		this.updateMockedPhone3();
-		this.updateMockedPhone4();
+		// this.updateMockedPhone3();
+		// this.updateMockedPhone4();
 
 		console.log('clicked');
 		const appInfoDoc = AppInfo.findOne({ name: 'appInfo' });
@@ -85,8 +85,8 @@ class App extends Component {
 		var loop = new Tone.Loop(time => {
 			this.updateMockedPhone1();
 			this.updateMockedPhone2();
-			this.updateMockedPhone3();
-			this.updateMockedPhone4();
+			// this.updateMockedPhone3();
+			// this.updateMockedPhone4();
 
 			const phone = Phones.findOne({ sessionId: this.currentSessionId() });
 			let note = (phone && phone.note) || 'A4';
@@ -157,55 +157,55 @@ class App extends Component {
 		}
 	}
 
-	// updateMockedPhone1() {
-	// 	const angle = 0;
-	// 	const note = this.currentCorrectNote();
-	// 	const lastUpdated = new Date();
-	// 	const sessionId = 'mock1';
-	// 	Phones.upsert('mock1', {
-	// 		name: sessionId,
-	// 		sessionId,
-	// 		angle,
-	// 		note,
-	// 		lastUpdated
-	// 	});
-	// }
-	// updateMockedPhone2() {
-	// 	const angle = 0;
-	// 	const note = this.currentCorrectNote();
-	// 	const lastUpdated = new Date();
-	// 	const sessionId = 'mock2';
-	// 	Phones.upsert('mock2', {
-	// 		sessionId,
-	// 		angle,
-	// 		note,
-	// 		lastUpdated
-	// 	});
-	// }
-	// updateMockedPhone3() {
-	// 	const angle = 0;
-	// 	const note = this.currentCorrectNote();
-	// 	const lastUpdated = new Date();
-	// 	const sessionId = 'mock3';
-	// 	Phones.upsert('mock3', {
-	// 		sessionId,
-	// 		angle,
-	// 		note,
-	// 		lastUpdated
-	// 	});
-	// }
-	// updateMockedPhone4() {
-	// 	const angle = 0;
-	// 	const note = this.currentCorrectNote();
-	// 	const lastUpdated = new Date();
-	// 	const sessionId = 'mock4';
-	// 	Phones.upsert('mock4', {
-	// 		sessionId,
-	// 		angle,
-	// 		note,
-	// 		lastUpdated
-	// 	});
-	// }
+	updateMockedPhone1() {
+		const angle = 0;
+		const note = this.currentCorrectNote();
+		const lastUpdated = new Date();
+		const sessionId = 'mock1';
+		Phones.upsert('mock1', {
+			name: sessionId,
+			sessionId,
+			angle,
+			note,
+			lastUpdated
+		});
+	}
+	updateMockedPhone2() {
+		const angle = 0;
+		const note = this.currentCorrectNote();
+		const lastUpdated = new Date();
+		const sessionId = 'mock2';
+		Phones.upsert('mock2', {
+			sessionId,
+			angle,
+			note,
+			lastUpdated
+		});
+	}
+	updateMockedPhone3() {
+		const angle = 0;
+		const note = this.currentCorrectNote();
+		const lastUpdated = new Date();
+		const sessionId = 'mock3';
+		Phones.upsert('mock3', {
+			sessionId,
+			angle,
+			note,
+			lastUpdated
+		});
+	}
+	updateMockedPhone4() {
+		const angle = 0;
+		const note = this.currentCorrectNote();
+		const lastUpdated = new Date();
+		const sessionId = 'mock4';
+		Phones.upsert('mock4', {
+			sessionId,
+			angle,
+			note,
+			lastUpdated
+		});
+	}
 
 	nextCorrectNote() {
 		if (this.state.turn < OdeToJoyNotes.length) {
