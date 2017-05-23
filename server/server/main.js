@@ -6,6 +6,29 @@ const AppInfo = new Mongo.Collection('appInfo');
 
 Meteor.startup(() => {
 	console.log('Starting');
+
+	Phones.allow({
+		insert() {
+			return true;
+		},
+		update() {
+			return true;
+		},
+		remove() {
+			return true;
+		}
+	});
+	AppInfo.allow({
+		insert() {
+			return true;
+		},
+		update() {
+			return true;
+		},
+		remove() {
+			return true;
+		}
+	});
 	const appinfo = AppInfo.findOne({ name: 'appInfo' });
 	if (!appinfo) {
 		console.log('Making app info');
