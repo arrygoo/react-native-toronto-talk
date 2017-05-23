@@ -11,7 +11,9 @@ import _ from 'lodash';
 const Phones = new Mongo.Collection('phones');
 const AppInfo = new Mongo.Collection('appInfo');
 
-const OdeToJoy = 'EEFG GFED CCDE EDDD EEFG GFED CCDE DCCC';
+const OdeToJoy =
+	'EEFG GFED CCDE EDDD EEFG GFED CCDE DCCC' +
+	' DDEC DFEC DFED CDGG EEFG GFED CCDE DCCC';
 // const OdeToJoy = 'EEFG';
 const OdeToJoyNotes = OdeToJoy.replace(/\s/g, '').split('');
 
@@ -97,14 +99,11 @@ class App extends Component {
 			} else {
 				note = note + '3';
 			}
-			AppInfo.update(
-				{ _id: 'QaGoK9QTAL82x2weC' },
-				{
-					$set: {
-						turn: this.state.turn
-					}
+			AppInfo.update(appInfoDoc && appInfoDoc._id, {
+				$set: {
+					turn: this.state.turn
 				}
-			);
+			});
 
 			this.setState((prevState, props) => ({ turn: prevState.turn + 1 }));
 			synth.triggerAttackRelease(note, '0.55', time);
