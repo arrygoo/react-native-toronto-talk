@@ -22,7 +22,9 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			turn: 0
+			turn: 0,
+			currentPlayingNote: '',
+			playedCorrectNote: false
 		};
 	}
 
@@ -93,20 +95,25 @@ class App extends Component {
 			const angle = (phone && phone.angle) || 0;
 			console.log(phone, note, angle);
 			// if (this.state.turn % 2 || this.state.turn < 3) {
-			if (this.state.turn < 3) {
-				// if (true) {
-				note = (OdeToJoyNotes[this.state.turn] || 'A') + '3';
-			} else {
-				note = note + '3';
-			}
+
 			AppInfo.update(appInfoDoc && appInfoDoc._id, {
 				$set: {
 					turn: this.state.turn
 				}
 			});
-
-			this.setState((prevState, props) => ({ turn: prevState.turn + 1 }));
-			synth.triggerAttackRelease(note, '0.9', time);
+			let noteInKey = 'E3';
+			if (this.state.turn < 5) {
+				// if (true) {
+				noteInKey = (OdeToJoyNotes[this.state.turn] || 'A') + '3';
+			} else {
+				noteInKey = note + '3';
+			}
+			this.setState((prevState, props) => ({
+				turn: prevState.turn + 1,
+				currentPlayingNote: note,
+				playedCorrectNote: note === OdeToJoyNotes[this.state.turn]
+			}));
+			synth.triggerAttackRelease(noteInKey, '0.9', time);
 		}, '1');
 		//loop between the first and fourth measures of the Transport's timeline
 		loop.start('1m').stop('32m');
@@ -123,6 +130,10 @@ class App extends Component {
 		const count = this.userCount();
 		const personTurn = turn % count;
 		return people[personTurn];
+	}
+
+	prevUser() {
+		return this.getNthUser(-1);
 	}
 
 	currentUser() {
@@ -143,7 +154,7 @@ class App extends Component {
 			return OdeToJoyNotes[this.state.turn];
 		}
 	}
-
+	//
 	isCorrectNote() {
 		if (!this.currentUser()) return false;
 		if (OdeToJoyNotes[this.state.turn] === this.currentUser().note) {
@@ -176,6 +187,7 @@ class App extends Component {
 		const lastUpdated = new Date();
 		const sessionId = 'mock2';
 		Phones.upsert('mock2', {
+			name: sessionId,
 			sessionId,
 			angle,
 			note,
@@ -188,6 +200,7 @@ class App extends Component {
 		const lastUpdated = new Date();
 		const sessionId = 'mock3';
 		Phones.upsert('mock3', {
+			name: sessionId,
 			sessionId,
 			angle,
 			note,
@@ -200,6 +213,7 @@ class App extends Component {
 		const lastUpdated = new Date();
 		const sessionId = 'mock4';
 		Phones.upsert('mock4', {
+			name: sessionId,
 			sessionId,
 			angle,
 			note,
@@ -213,61 +227,54 @@ class App extends Component {
 		}
 	}
 
+	previousCorrectNote() {
+		if (this.state.turn < 1) {
+			return OdeToJoyNotes[this.state.turn - 1];
+		}
+	}
+
 	render() {
+		// const currentPlayingPhone = Phones.findOne({
+		// 	sessionId: this.currentSessionId()
+		// });
+		// let currentPlayingNote =
+		// 	(currentPlayingPhone && currentPlayingPhone.note) || 'A4';
+
 		return (
 			<div className="container">
 				<header>
 					<h1>React-native + expo.io + Meteor </h1>
 				</header>
 				<button onClick={this.startPlaying}> Start Playing! </button>
-
-				Current person:&nbsp;
-
-				{(this.isCorrectNote() && '      ✅') || '      ⛔'}
-
 				Note number:{this.state.turn}
 				<br />
 				<br />
+				{' '}
+				Current person:&nbsp;
+				{' '}
+				{this.prevUser() && this.prevUser().name}
+				<br /> Played: {this.state.currentPlayingNote}
+				{(this.state.playedCorrectNote && '      ✅') || '      ⛔'}
+				<br />
+				<br />
+				Next up: {this.currentUser() && this.currentUser().name}
 
-				Name: {this.currentUser() && this.currentUser().name}
-				<br />
-				ID: {this.currentSessionId()}
-				<br />
-				Note: {this.currentUser() && this.currentUser().note}
-				<br />
-				Degree: {this.currentUser() && this.currentUser().angle}
-				<br />
-				Correct Note: {this.currentCorrectNote()}
 				<br />
 				<br />
-
-				Next person:&nbsp;
-				<br />
-
-				Name: {this.nextUser() && this.nextUser().name}
-				<br />
-				Note: {this.nextUser() && this.nextUser().note}
-				<br />
-				Degree: {this.nextUser() && this.nextUser().angle}
-				<br />
-				Correct Note: {this.nextCorrectNote()}
-
 				<br />
 				People Online:
-				<ul>
-					{this.whoIsOnline().map(person => (
-						<li key={person.sessionId}>
-							UserSessionId: {person.sessionId}
-							<br />
-							Name: {person.name}
-							<br />
-							Current Note: {person.note}
-							Current Degree: {person.angle}
-							<br />
-							<br />
-						</li>
-					))}
-				</ul>
+				{/* <ul> */}
+				{this.whoIsOnline().map(person => (
+					<div key={person.sessionId}>
+
+						{/*  <li key={person.sessionId}> */}
+						{/* UserSessionId: {person.sessionId} */}
+						{'  '} Name: {person.name}{'  '} 📐: {person.angle}
+						{/* Current Note: {person.note} */}
+						{/*  </li> */}
+					</div>
+				))}
+				{/* </ul> */}
 			</div>
 		);
 	}
