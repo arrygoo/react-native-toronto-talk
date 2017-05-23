@@ -67,7 +67,9 @@ class App extends Component {
 		this.updateMockedPhone4();
 
 		console.log('clicked');
-		AppInfo.update(AppInfo.findOne()._id, {
+		const appInfoDoc = AppInfo.findOne({ name: 'appInfo' });
+		console.log('found app info', appInfoDoc);
+		AppInfo.update(appInfoDoc && appInfoDoc._id, {
 			$set: {
 				name: 'appInfo',
 				turn: 0,
@@ -162,6 +164,7 @@ class App extends Component {
 		const lastUpdated = new Date();
 		const sessionId = 'mock1';
 		Phones.upsert('mock1', {
+			name: sessionId,
 			sessionId,
 			angle,
 			note,
