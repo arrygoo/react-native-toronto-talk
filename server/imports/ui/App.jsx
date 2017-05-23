@@ -231,6 +231,8 @@ class App extends Component {
 
 				Name: {this.currentUser() && this.currentUser().name}
 				<br />
+				ID: {this.currentSessionId()}
+				<br />
 				Note: {this.currentUser() && this.currentUser().note}
 				<br />
 				Degree: {this.currentUser() && this.currentUser().angle}
