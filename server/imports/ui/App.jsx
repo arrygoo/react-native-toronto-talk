@@ -106,8 +106,8 @@ class App extends Component {
 			});
 
 			this.setState((prevState, props) => ({ turn: prevState.turn + 1 }));
-			synth.triggerAttackRelease(note, '0.55', time);
-		}, '0.6');
+			synth.triggerAttackRelease(note, '0.9', time);
+		}, '1');
 		//loop between the first and fourth measures of the Transport's timeline
 		loop.start('1m').stop('32m');
 		Tone.Transport.start();
@@ -157,55 +157,55 @@ class App extends Component {
 		}
 	}
 
-	updateMockedPhone1() {
-		const angle = 0;
-		const note = this.currentCorrectNote();
-		const lastUpdated = new Date();
-		const sessionId = 'mock1';
-		Phones.upsert('mock1', {
-			name: sessionId,
-			sessionId,
-			angle,
-			note,
-			lastUpdated
-		});
-	}
-	updateMockedPhone2() {
-		const angle = 0;
-		const note = this.currentCorrectNote();
-		const lastUpdated = new Date();
-		const sessionId = 'mock2';
-		Phones.upsert('mock2', {
-			sessionId,
-			angle,
-			note,
-			lastUpdated
-		});
-	}
-	updateMockedPhone3() {
-		const angle = 0;
-		const note = this.currentCorrectNote();
-		const lastUpdated = new Date();
-		const sessionId = 'mock3';
-		Phones.upsert('mock3', {
-			sessionId,
-			angle,
-			note,
-			lastUpdated
-		});
-	}
-	updateMockedPhone4() {
-		const angle = 0;
-		const note = this.currentCorrectNote();
-		const lastUpdated = new Date();
-		const sessionId = 'mock4';
-		Phones.upsert('mock4', {
-			sessionId,
-			angle,
-			note,
-			lastUpdated
-		});
-	}
+	// updateMockedPhone1() {
+	// 	const angle = 0;
+	// 	const note = this.currentCorrectNote();
+	// 	const lastUpdated = new Date();
+	// 	const sessionId = 'mock1';
+	// 	Phones.upsert('mock1', {
+	// 		name: sessionId,
+	// 		sessionId,
+	// 		angle,
+	// 		note,
+	// 		lastUpdated
+	// 	});
+	// }
+	// updateMockedPhone2() {
+	// 	const angle = 0;
+	// 	const note = this.currentCorrectNote();
+	// 	const lastUpdated = new Date();
+	// 	const sessionId = 'mock2';
+	// 	Phones.upsert('mock2', {
+	// 		sessionId,
+	// 		angle,
+	// 		note,
+	// 		lastUpdated
+	// 	});
+	// }
+	// updateMockedPhone3() {
+	// 	const angle = 0;
+	// 	const note = this.currentCorrectNote();
+	// 	const lastUpdated = new Date();
+	// 	const sessionId = 'mock3';
+	// 	Phones.upsert('mock3', {
+	// 		sessionId,
+	// 		angle,
+	// 		note,
+	// 		lastUpdated
+	// 	});
+	// }
+	// updateMockedPhone4() {
+	// 	const angle = 0;
+	// 	const note = this.currentCorrectNote();
+	// 	const lastUpdated = new Date();
+	// 	const sessionId = 'mock4';
+	// 	Phones.upsert('mock4', {
+	// 		sessionId,
+	// 		angle,
+	// 		note,
+	// 		lastUpdated
+	// 	});
+	// }
 
 	nextCorrectNote() {
 		if (this.state.turn < OdeToJoyNotes.length) {
